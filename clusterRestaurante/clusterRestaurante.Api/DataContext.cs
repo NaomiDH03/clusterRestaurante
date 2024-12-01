@@ -1,9 +1,10 @@
 ﻿using clusterRestaurante.Shared.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace clusterRestaurante.Api
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Employee> Employees { get; set; }

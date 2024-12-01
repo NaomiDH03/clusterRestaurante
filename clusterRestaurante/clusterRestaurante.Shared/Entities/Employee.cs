@@ -20,7 +20,10 @@ namespace clusterRestaurante.Shared.Entities
         public int Telephone { get; set; }
 
         public string Email { get; set; } = null!;
+        public string roleRestaurant { get; set; } = null!;
 
         public Restaurant Restaurant { get; set; } = null!;
+
+        public ICollection<User>? Users { get; set; } 
     }
 }
