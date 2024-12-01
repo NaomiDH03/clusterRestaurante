@@ -17,9 +17,11 @@ namespace clusterTienda.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=con"));
-         
+            builder.Services.AddTransient<Seeder>();
 
             var app = builder.Build();
+            SeedApp(app);
+
       
 
             // Configure the HTTP request pipeline.
@@ -39,6 +41,14 @@ namespace clusterTienda.Api
             app.Run();
         }
 
-      
+        private static void SeedApp(WebApplication app)
+        {
+            IServiceScopeFactory? serviceScopeFactory = app.Services.GetService<IServiceScopeFactory>();
+            using (IServiceScope? serviceScope = serviceScopeFactory!.CreateScope())
+            {
+                Seeder? seeder = serviceScope.ServiceProvider.GetService<Seeder>();
+                seeder!.SeedAsync().Wait();
+            }
+        }
     }
 }

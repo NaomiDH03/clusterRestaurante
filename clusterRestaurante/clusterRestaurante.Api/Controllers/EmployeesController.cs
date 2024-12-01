@@ -18,7 +18,7 @@ namespace clusterRestaurante.Api.Controllers
         [HttpGet] //Metodo get
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await dataContext.Employees.ToListAsync());
+            return Ok(await dataContext.Employees.Include(r => r.Restaurant).ToListAsync());
         }
 
         [HttpGet("id:int")] //Metodo get pero con un id
