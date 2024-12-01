@@ -1,4 +1,5 @@
-﻿using clusterRestaurante.Shared.Entities;
+﻿using clusterRestaurante.Shared.DTOs;
+using clusterRestaurante.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace clusterRestaurante.Api.Helpers
@@ -13,5 +14,7 @@ namespace clusterRestaurante.Api.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
         //Checamos si existe el usuario
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+        Task<SignInResult> LoginAsync(LoginDTO login);
+        Task LogoutAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using clusterRestaurante.Shared.Entities;
+﻿using clusterRestaurante.Shared.DTOs;
+using clusterRestaurante.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +10,14 @@ namespace clusterRestaurante.Api.Helpers
         private readonly DataContext dataContext;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<User> signInManager;
 
-        public UserHelper(DataContext dataContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserHelper(DataContext dataContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             this.dataContext = dataContext;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
         }
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
@@ -49,6 +52,16 @@ namespace clusterRestaurante.Api.Helpers
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
             return await userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginDTO login)
+        {
+            return await signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await signInManager.SignOutAsync(); 
         }
     }
 }
