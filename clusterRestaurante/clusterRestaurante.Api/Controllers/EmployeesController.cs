@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace clusterRestaurante.Api.Controllers
 {
+    //Par lo del swagger
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("/api/employees")]
